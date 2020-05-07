@@ -1,18 +1,16 @@
-﻿using ContosoUniversity.Data;
-using ContosoUniversity.Models;
-using ContosoUniversity.Repositories.Implementation;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ContosoUniversity.Data;
+using ContosoUniversity.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Repositories.Implements
 {
     public class CourseRepository : GenericRepository<Course>, ICourseRepository
     {
         private SchoolContext schoolContext;
-
         public CourseRepository(SchoolContext schoolContext) : base(schoolContext)
         {
             this.schoolContext = schoolContext;
@@ -26,6 +24,10 @@ namespace ContosoUniversity.Repositories.Implements
             //JOIN[dbo].[Student] S ON S.ID	=	E.StudentID
             //WHERE E.CourseID = 4022;
 
+
+
+            //
+
             //var listStudents = await schoolContext.Enrollments
             //    .Include(x => x.Student)
             //    .Where(x => x.CourseID == id)
@@ -38,24 +40,27 @@ namespace ContosoUniversity.Repositories.Implements
                                       select student).ToListAsync();
 
             return listStudents;
+
         }
 
         public new async Task Delete(int id)
         {
             var entity = await GetById(id);
-
             if (entity == null)
-                throw new Exception("The entiti is null");
+            {
+                throw new Exception("the entity is null");
+            }
+
             var flag = schoolContext.Enrollments.Any(x => x.CourseID == id);
 
             if (flag)
-                throw new Exception("The Course have enrollments");
+            {
+                throw new Exception("Ther course have enrollments");
+            }
 
             schoolContext.Courses.Remove(entity);
             await schoolContext.SaveChangesAsync();
 
         }
-
-
     }
 }

@@ -2,56 +2,49 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
-using System.Linq;
 
-namespace ContosoUniversity.Repositories.Implementation
+namespace ContosoUniversity.Repositories.Implements
 {
 
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly SchoolContext schoolContext;
+        private readonly SchoolContext _context;
 
-        public GenericRepository(SchoolContext schoolContext)
+        public GenericRepository(SchoolContext context)
         {
-            this.schoolContext = schoolContext;
+            _context = context;
         }
-
         public async Task Delete(int id)
         {
             var entity = await GetById(id);
-
-            if (entity == null)
-                throw new Exception("The entity is null");
-            schoolContext.Set<TEntity>().Remove(entity);
-
-            await schoolContext.SaveChangesAsync();
+            _context.Set<TEntity>().Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<List<TEntity>> GetAll()
+        public Task<List<TEntity>> GetAll()
         {
-            return await schoolContext.Set<TEntity>().ToListAsync();
+
+            return _context.Set<TEntity>().ToListAsync();
+            //throw new NotImplementedException();
         }
 
-        public async Task<TEntity> GetById(int id)
+        public Task<TEntity> GetById(int id)
         {
-            return await schoolContext.Set<TEntity>().FindAsync(id);
+            return _context.Set<TEntity>().FindAsync(id);
         }
-
 
         public async Task<TEntity> Insert(TEntity entity)
         {
-            await schoolContext.Set<TEntity>().AddAsync(entity);
-            await schoolContext.SaveChangesAsync();
+            await _context.Set<TEntity>().AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity;
         }
 
         public async Task<TEntity> Update(TEntity entity)
         {
-            schoolContext.Set<TEntity>().Update(entity);
-            await schoolContext.SaveChangesAsync();
+            _context.Set<TEntity>().Update(entity);
+            await _context.SaveChangesAsync();
             return entity;
         }
     }
 }
-

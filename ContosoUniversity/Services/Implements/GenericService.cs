@@ -5,53 +5,61 @@ using System.Threading.Tasks;
 
 namespace ContosoUniversity.Services.Implements
 {
-    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : class
-
+    public class GenericService<TEntity> : IGenericService<TEntity>
+       where TEntity : class
     {
-
-
-        private IGenericRepository<TEntity> genericRepository;
-        private IStudentRepository studentRepository;
+        private IGenericRepository<TEntity> _genericRepository;
 
         public GenericService(IGenericRepository<TEntity> genericRepository)
         {
-            this.genericRepository = genericRepository;
-        }
-
-        public GenericService(IStudentRepository studentRepository)
-        {
-            this.studentRepository = studentRepository;
+            _genericRepository = genericRepository;
         }
 
         public async Task Delete(int id)
         {
-
-            await genericRepository.Delete(id);
-
+            try
+            {
+                await _genericRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<List<TEntity>> GetAll()
         {
-            return await genericRepository.GetAll();
+            return await _genericRepository.GetAll();
         }
 
         public async Task<TEntity> GetById(int id)
         {
-            return await genericRepository.GetById(id);
+            return await _genericRepository.GetById(id);
         }
 
         public async Task<TEntity> Insert(TEntity entity)
         {
-
-            return await genericRepository.Insert(entity);
-
+            try
+            {
+                return await _genericRepository.Insert(entity);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<TEntity> Update(TEntity entity)
         {
-
-            return await genericRepository.Update(entity);
-
+            try
+            {
+                return await _genericRepository.Update(entity);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
+

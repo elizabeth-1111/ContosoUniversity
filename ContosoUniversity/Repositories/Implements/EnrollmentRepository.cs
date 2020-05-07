@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
-using ContosoUniversity.Repositories.Implementation;
+using ContosoUniversity.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace ContosoUniversity.Repositories.Implements
 {
@@ -17,6 +18,27 @@ namespace ContosoUniversity.Repositories.Implements
         this.schoolContext = schoolContext;
     }
 
-    
+        public new async Task<List<Enrollment>> GetAll()
+        {
+
+            var listEnrollments = await schoolContext.Enrollments
+                .Include(x => x.Course)
+                .Include(x => x.Student)
+                .ToListAsync();
+
+            //var listEnrollments = await (from enrollments in schoolContext.Enrollments
+            //                             join course in schoolContext.Courses on enrollments.CourseID equals course.CourseID
+            //                             join student in schoolContext.Students on enrollments.StudentID equals student.ID
+            //                             select enrollments).ToListAsync();
+
+
+            //return await schoolContext.Enrollments.ToListAsync();
+            //throw new NotImplementedException();
+
+            return listEnrollments;
+        }
     }
 }
+
+    
+ 

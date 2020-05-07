@@ -1,10 +1,13 @@
-﻿
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ContosoUniversity.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace ContosoUniversity.DTOs
 {
-    public class StudentDTO
+    public class InstructorDTO
     {
         public int ID { get; set; }
 
@@ -16,9 +19,12 @@ namespace ContosoUniversity.DTOs
         [Display(Name = "Firts Name")]
         public string FirstMidName { get; set; }
 
-        [Required(ErrorMessage = "The Enrollment Date  is required")]
-        [Display(Name = "Enrrollment date")]
-        public DateTime EnrollmentDate { get; set; }
+        [Required(ErrorMessage = "The Hire Date  is required")]
+        [Display(Name = "Hire date")]
+        public DateTime Hiredate { get; set; }
+
+        public OfficeAssignment OfficeAssignment { get; set; }
+
 
         public string FullName
         {
@@ -30,3 +36,5 @@ namespace ContosoUniversity.DTOs
         }
     }
 }
+
+   
