@@ -1,5 +1,11 @@
 ﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ContosoUniversity.DTOs;
 using ContosoUniversity.Models;
+
 
 namespace ContosoUniversity.DTOs
 {
@@ -13,12 +19,21 @@ namespace ContosoUniversity.DTOs
             CreateMap<CourseDTO, Course>();
             CreateMap<Course, CourseDTO>();
 
+
             CreateMap<EnrollmentDTO, Enrollment>();
             CreateMap<Enrollment, EnrollmentDTO>();
 
 
             CreateMap<InstructorDTO, Instructor>();
             CreateMap<Instructor, InstructorDTO>();
+
+            CreateMap<DepartmentDTO, Department>();
+            CreateMap<Department, DepartmentDTO>();
+
+
+            CreateMap<OfficeAssignmentDTO, OfficeAssignment>();
+            CreateMap<OfficeAssignment, OfficeAssignmentDTO>();
         }
+
     }
-} 
+}

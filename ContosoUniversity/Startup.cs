@@ -11,14 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using ContosoUniversity.Repositories;
-using ContosoUniversity.Services;
 using ContosoUniversity.Repositories.Implements;
+using ContosoUniversity.Services;
 using ContosoUniversity.Services.Implements;
 using AutoMapper;
-
-
+using Microsoft.CodeAnalysis.Options;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 
 namespace ContosoUniversity
 {
@@ -34,8 +34,6 @@ namespace ContosoUniversity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -43,14 +41,21 @@ namespace ContosoUniversity
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<SchoolContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SchoolContext")));
 
-            //repositories
+
+            services.AddDbContext<SchoolContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("SchoolContext")));
+
+            //Repositories
             services.AddScoped<ICourseRepository, CourseRepository>();
 
-            //servicios
+            //Services
             services.AddScoped<ICourseService, CourseService>();
+
+
+            //Repositories
+            services.AddScoped<IStudentRepository, StudentRepository>();
+
             //Services
             services.AddScoped<IStudentService, StudentService>();
 
@@ -66,11 +71,15 @@ namespace ContosoUniversity
 
             //REPOSOTORIES PARCIAL
             services.AddScoped<IInstructorRepository, InstructorRepository>();
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IOfficeAssignmentRepository, OfficeAssignmentRepository>();
+
 
 
             //SERVICES PARCIAL
             services.AddScoped<IInstructorService, InstructorService>();
-
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IOfficeAssignmentService, OfficeAssignmentService>();
 
 
             //services.AddAutoMapper(options =>
@@ -79,12 +88,8 @@ namespace ContosoUniversity
 
             //});
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-        
-
-
-    }
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

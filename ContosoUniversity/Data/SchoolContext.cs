@@ -1,7 +1,6 @@
 ﻿using ContosoUniversity.Models;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace ContosoUniversity.Data
 {
     public class SchoolContext : DbContext
@@ -13,8 +12,6 @@ namespace ContosoUniversity.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Student> Students { get; set; }
-
-
 
 
         public DbSet<CourseInstructor> CourseInstructor { get; set; }

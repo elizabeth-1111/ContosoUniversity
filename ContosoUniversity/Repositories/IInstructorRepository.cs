@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ContosoUniversity.Repositories
 {
-    interface IInstructorRepository : IGenericRepository<Instructor>
+   public  interface IInstructorRepository : IGenericRepository<Instructor>
     {
         Task<IEnumerable<Course>> GetCursosByInstructor(int id);
 

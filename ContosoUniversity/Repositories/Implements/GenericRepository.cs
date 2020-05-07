@@ -2,10 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace ContosoUniversity.Repositories.Implements
 {
-
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private readonly SchoolContext _context;
@@ -17,20 +17,22 @@ namespace ContosoUniversity.Repositories.Implements
         public async Task Delete(int id)
         {
             var entity = await GetById(id);
+
+            if (entity == null)
+                throw new System.Exception("The entity is null");
+
             _context.Set<TEntity>().Remove(entity);
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<TEntity>> GetAll()
+        public async Task<List<TEntity>> GetAll()
         {
-
-            return _context.Set<TEntity>().ToListAsync();
-            //throw new NotImplementedException();
+            return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public Task<TEntity> GetById(int id)
+        public async Task<TEntity> GetById(int id)
         {
-            return _context.Set<TEntity>().FindAsync(id);
+            return await _context.Set<TEntity>().FindAsync(id);
         }
 
         public async Task<TEntity> Insert(TEntity entity)

@@ -18,12 +18,21 @@ namespace ContosoUniversity.Services.Implements
 
         }
 
+        public Task<IEnumerable<Course>> GetCoursesByStudent(int id)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<IEnumerable<Course>> GetCursosByStudent(int id)
         {
 
             return await studentRepository.GetCursosByStudent(id);
             //throw new NotImplementedException();
+        }
+
+        Task IStudentService.GetCursosByStudent(int value)
+        {
+            throw new NotImplementedException();
         }
     }
 }

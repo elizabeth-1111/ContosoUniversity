@@ -60,5 +60,3 @@ namespace ContosoUniversity.Repositories.Implements
 
     }
 }
-
-    

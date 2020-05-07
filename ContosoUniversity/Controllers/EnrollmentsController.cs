@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using ContosoUniversity.Models;
 using ContosoUniversity.Repositories;
 using ContosoUniversity.Services;
-using ContosoUniversity.Repositories.Implements;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoUniversity.Controllers
 {
